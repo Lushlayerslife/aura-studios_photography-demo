@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Camera, Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
-const DEMO_EMAIL = 'demophoto@coreauralogix.com';
-const DEMO_PASSWORD = '@Thestudio2day!';
+const DEMO_EMAIL = import.meta.env.VITE_DEMO_EMAIL;
+const DEMO_PASSWORD = import.meta.env.VITE_DEMO_PASSWORD;
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState('');
