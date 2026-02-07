@@ -10,7 +10,8 @@ import {
   BarChart3,
   UsersRound,
   Settings,
-  Aperture
+  Aperture,
+  LogOut
 } from 'lucide-react';
 
 const navItems = [
@@ -26,7 +27,7 @@ const navItems = [
   { to: '/settings', icon: Settings, label: 'Settings' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onLogout }) {
   return (
     <nav className="sidebar">
       <div style={{ marginBottom: '32px', padding: '0 14px' }}>
@@ -59,9 +60,22 @@ export default function Sidebar() {
         <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
           Enterprise Studio Plan
         </div>
-        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
+        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px', marginBottom: '10px' }}>
           demophoto@coreauralogix.com
         </div>
+        {onLogout && (
+          <button onClick={onLogout} style={{
+            display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+            padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.03)', color: '#94a3b8', fontSize: 12,
+            cursor: 'pointer', transition: 'all 0.15s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.color = '#f87171'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.color = '#94a3b8'; }}
+          >
+            <LogOut size={14} /> Sign Out
+          </button>
+        )}
       </div>
     </nav>
   );

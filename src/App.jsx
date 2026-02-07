@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Sessions from './components/Sessions';
@@ -12,21 +14,16 @@ import Team from './components/Team';
 import Settings from './components/Settings';
 import './App.css';
 
-function Placeholder({ title }) {
-  return (
-    <div className="main-content">
-      <div className="page-header">
-        <h1>{title}</h1>
-        <p>Coming soon — we'll build this next!</p>
-      </div>
-    </div>
-  );
-}
-
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  if (!isAuthenticated) {
+    return <Login onLogin={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <BrowserRouter>
-      <Sidebar />
+      <Sidebar onLogout={() => setIsAuthenticated(false)} />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/sessions" element={<Sessions />} />
