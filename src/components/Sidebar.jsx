@@ -1,109 +1,82 @@
-import { 
-  LayoutDashboard, 
-  Pill, 
-  Package, 
-  AlertTriangle, 
-  Users, 
-  UserCog, 
-  Shield, 
-  Thermometer, 
-  FileText, 
-  BarChart, 
-  ShoppingCart, 
+import { NavLink } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  Camera,
+  Users,
+  Image,
+  FileText,
+  Mail,
+  GitBranch,
+  BarChart3,
+  UsersRound,
   Settings,
-  DollarSign,
-  Lock,
-  LogOut,
-  TrendingDown,
-  ClipboardList,
-  RefreshCw,
-  Syringe
-} from 'lucide-react'
+  Aperture,
+  LogOut
+} from 'lucide-react';
 
-const menuItems = [
-  { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard, tier: 'core' },
-  { id: 'prescriptions', name: 'Prescriptions', icon: Pill, tier: 'builder' },
-  { id: 'inventory', name: 'Inventory', icon: Package, tier: 'core' },
-  { id: 'incidents', name: 'Incidents', icon: AlertTriangle, tier: 'core' },
-  { id: 'patients', name: 'Patients', icon: Users, tier: 'builder' },
-  { id: 'staff', name: 'Staff', icon: UserCog, tier: 'agency' },
-  { id: 'compliance', name: 'Compliance', icon: Shield, tier: 'agency' },
-  { id: 'equipment', name: 'Equipment', icon: Thermometer, tier: 'agency' },
-  { id: 'documents', name: 'Documents', icon: FileText, tier: 'agency' },
-  { id: 'reports', name: 'Reports', icon: BarChart, tier: 'core' },
-  { id: 'claims', name: 'Claims & Financial', icon: DollarSign, tier: 'core' },
-  { id: 'dir', name: 'DIR Fee Tracker', icon: TrendingDown, tier: 'builder' },
-  { id: 'ecare', name: 'eCare Plans', icon: ClipboardList, tier: 'builder' },
-  { id: 'medsync', name: 'Med Sync', icon: RefreshCw, tier: 'builder' },
-  { id: 'vaccines', name: 'Vaccine Scheduler', icon: Syringe, tier: 'agency' },
-  { id: 'pos', name: 'Point of Sale', icon: ShoppingCart, tier: 'enterprise' },
-  { id: 'settings', name: 'Settings', icon: Settings, tier: 'core' },
-]
+const navItems = [
+  { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/sessions', icon: Camera, label: 'Sessions' },
+  { to: '/clients', icon: Users, label: 'Clients' },
+  { to: '/galleries', icon: Image, label: 'Galleries' },
+  { to: '/invoices', icon: FileText, label: 'Invoices' },
+  { to: '/templates', icon: Mail, label: 'Templates' },
+  { to: '/workflows', icon: GitBranch, label: 'Workflows' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { to: '/team', icon: UsersRound, label: 'Team' },
+  { to: '/settings', icon: Settings, label: 'Settings' },
+];
 
-const tierLevel = {
-  'core': 1,
-  'builder': 2,
-  'agency': 3,
-  'enterprise': 4
-}
-
-export default function Sidebar({ currentPage, setCurrentPage, tier }) {
-  const currentTierLevel = tierLevel[tier]
-
+export default function Sidebar({ onLogout }) {
   return (
-    <div className="w-64 sidebar-bg border-r-2 border-slate-700 flex flex-col">
-      {/* Logo */}
-      <div className="p-5 border-b border-slate-800">
-        <img 
-          src="/Logo.png" 
-          alt="CoreAuraLogix" 
-          className="h-10 w-auto invert"
-        />
-        <p className="text-xs text-slate-500 mt-2">Pharmacy Management Suite</p>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
-        {menuItems.map((item) => {
-          const Icon = item.icon
-          const isLocked = tierLevel[item.tier] > currentTierLevel
-          const isActive = currentPage === item.id
-
-          return (
-            <button
-              key={item.id}
-              onClick={() => !isLocked && setCurrentPage(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? 'nav-active text-white'
-                  : isLocked
-                  ? 'bg-slate-800/20 text-slate-600 cursor-not-allowed'
-                  : 'bg-slate-800/40 text-slate-300 hover:bg-slate-700 hover:text-white'
-              }`}
-            >
-              <Icon size={18} />
-              <span className="flex-1 text-left">{item.name}</span>
-              {isLocked && <Lock size={14} className="text-slate-600" />}
-            </button>
-          )
-        })}
-      </nav>
-
-      {/* User */}
-      <div className="p-4 border-t border-slate-800">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white">
-            SF
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold text-white">Sunshine Family</p>
-            <p className="text-xs text-slate-400">demopharmacy@core...</p>
-          </div>
-          <button className="p-2 text-slate-400 hover:text-white transition-colors">
-            <LogOut size={18} />
-          </button>
+    <nav className="sidebar">
+      <div style={{ marginBottom: '32px', padding: '0 14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+          <Aperture size={24} color="#8b5cf6" />
+          <span style={{ fontSize: '18px', fontWeight: '700' }}>Aura Studios Demo</span>
         </div>
+        <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+          Luminance Studios
+        </span>
       </div>
-    </div>
-  )
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/'}
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? 'active' : ''}`
+            }
+          >
+            <item.icon size={18} />
+            {item.label}
+          </NavLink>
+        ))}
+      </div>
+
+      <div style={{ marginTop: 'auto', padding: '16px 14px', borderTop: '1px solid var(--border-color)' }}>
+        <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+          Enterprise Studio Plan
+        </div>
+        <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px', marginBottom: '10px' }}>
+          demophoto@coreauralogix.com
+        </div>
+        {onLogout && (
+          <button onClick={onLogout} style={{
+            display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+            padding: '8px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.03)', color: '#94a3b8', fontSize: 12,
+            cursor: 'pointer', transition: 'all 0.15s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.color = '#f87171'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.color = '#94a3b8'; }}
+          >
+            <LogOut size={14} /> Sign Out
+          </button>
+        )}
+      </div>
+    </nav>
+  );
 }
